@@ -9,4 +9,6 @@
     android:stretchMode="columnWidth"
     android:gravity="center"
     android:background="@color/darkgreybackground"
-    android:listSelector="@android:color/transparent" />
+    android:listSelector="@android:color/transparent"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="vertical" />
