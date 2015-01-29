@@ -11,8 +11,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import zkhlnk.v.lightsmqttwithpahotestproject.adapters.ImageAdapter;
 import zkhlnk.v.lightsmqttwithpahotestproject.R;
+import zkhlnk.v.lightsmqttwithpahotestproject.mqtt.Client;
+import zkhlnk.v.lightsmqttwithpahotestproject.utils.TypesConverter;
 
 public class SendingActivity extends ActionBarActivity {
 
@@ -20,6 +24,8 @@ public class SendingActivity extends ActionBarActivity {
 
     private boolean[] dataArray = new boolean[NUMBER_OF_LIGHTBULB];
     private String dataArrayKeyString = "DataArray";
+
+    private Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,11 @@ public class SendingActivity extends ActionBarActivity {
                 dataArray[position] = !dataArray[position];
             }
         });
+
+        if (client != null) {
+            client = new Client("tcp://iot.eclipse.org:1883", "ONPU.DIST.Sender", true);
+            // TODO Change if needed
+        }
     }
 
     @Override
@@ -64,7 +75,16 @@ public class SendingActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_send:
                 Toast.makeText(SendingActivity.this, "Sending...", Toast.LENGTH_SHORT).show();
-                // TODO: invoke MQTT-send method
+
+                try {
+                    client.publish("ONPU/DIST/Lights", Client.BEST_QOS,
+                            TypesConverter.toByta(dataArray)
+                    );
+                    // TODO Change if needed
+                } catch (MqttException e) {
+                    Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

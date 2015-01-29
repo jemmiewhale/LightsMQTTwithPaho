@@ -11,6 +11,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class Client implements MqttCallback, Parcelable {
+    public static final int BEST_QOS = 2;
     public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {
         @Override
         public Client createFromParcel(Parcel source) {
