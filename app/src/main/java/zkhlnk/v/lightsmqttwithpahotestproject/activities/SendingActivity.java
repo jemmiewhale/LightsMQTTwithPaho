@@ -57,7 +57,7 @@ public class SendingActivity extends ActionBarActivity {
             }
         });
 
-        if (client != null) {
+        if (client == null) {
             client = new Client("tcp://iot.eclipse.org:1883", "ONPU.DIST.Sender", true);
             // TODO Change if needed
         }
@@ -77,9 +77,8 @@ public class SendingActivity extends ActionBarActivity {
                 Toast.makeText(SendingActivity.this, "Sending...", Toast.LENGTH_SHORT).show();
 
                 try {
-                    client.publish("ONPU/DIST/Lights", Client.BEST_QOS,
-                            TypesConverter.toByta(dataArray)
-                    );
+                    byte[] payload = TypesConverter.toByta(dataArray);
+                    client.publish("ONPU/DIST/Lights", Client.BEST_QOS, payload);
                     // TODO Change if needed
                 } catch (MqttException e) {
                     Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
