@@ -9,10 +9,6 @@ import android.widget.ImageView;
 
 import zkhlnk.v.lightsmqttwithpahotestproject.R;
 
-/**
- * Created by Valerie on 26.01.2015.
- */
-
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] mThumbIds = {
