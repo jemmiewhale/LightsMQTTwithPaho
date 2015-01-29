@@ -9,6 +9,7 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
 public class Client implements MqttCallback, Parcelable {
     public static final int BEST_QOS = 2;
@@ -27,11 +28,14 @@ public class Client implements MqttCallback, Parcelable {
     private MqttConnectOptions conOpt;
 
     public Client(String brokerUrl, String clientId, boolean cleanSession) {
+        String tmpDir = System.getProperty("java.io.tmpdir");
+        MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
+
         try {
             conOpt = new MqttConnectOptions();
             conOpt.setCleanSession(cleanSession);
 
-            client = new MqttClient(brokerUrl, clientId);
+            client = new MqttClient(brokerUrl, clientId, dataStore);
 
             client.setCallback(this);
         } catch (MqttException e) {
