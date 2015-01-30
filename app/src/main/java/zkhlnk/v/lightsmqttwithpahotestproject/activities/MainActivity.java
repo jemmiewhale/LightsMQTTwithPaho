@@ -35,5 +35,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void getButtonOnClick(View view) {
+        Intent intent = new Intent(this, ReceivingActivity.class);
+        startActivity(intent);
     }
 }

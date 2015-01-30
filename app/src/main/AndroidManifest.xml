@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".activities.ReceivingActivity"
-            android:label="@string/title_activity_receiving"
+            android:label="@string/space"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

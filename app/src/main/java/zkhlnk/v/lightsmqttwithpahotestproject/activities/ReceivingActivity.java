@@ -41,14 +41,11 @@ public class ReceivingActivity extends ActionBarActivity {
         final GridView gridview = (GridView) findViewById(R.id.gridview);
         final ImageAdapter adapter = new ImageAdapter(this, NUMBER_OF_LIGHTBULB, R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
         gridview.setAdapter(adapter);
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_sending, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
