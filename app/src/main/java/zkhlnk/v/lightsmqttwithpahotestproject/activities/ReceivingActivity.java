@@ -26,9 +26,9 @@ public class ReceivingActivity extends ActionBarActivity {
     private String dataArrayKeyString = "DataArray";
 
     private Client client;
-
     GridView gridview;
-    ImageAdapter adapter;
+
+    private ImageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +100,21 @@ public class ReceivingActivity extends ActionBarActivity {
         public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
             byte[] payload = mqttMessage.getPayload();
             dataArray = TypesConverter.toBooleanA(payload);
-            adapter.setmThumbIds(dataArray, R.drawable.lightbulb_on, R.drawable.lightbulb_off);
-            adapter.notifyDataSetChanged();
+            System.out.println("Massage arrived.");
+            for (int i = 0; i < dataArray.length; i++) {
+                if (dataArray[i]) {
+                    adapter.setResource(i, R.drawable.lightbulb_on);
+                } else {
+                    adapter.setResource(i, R.drawable.lightbulb_off);
+                }
+            }
+
+            runOnUiThread(new Thread(new Runnable() {
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            ));
         }
 
         @Override
