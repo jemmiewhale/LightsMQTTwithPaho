@@ -11,7 +11,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import zkhlnk.v.lightsmqttwithpahotestproject.adapters.ImageAdapter;
 import zkhlnk.v.lightsmqttwithpahotestproject.R;
@@ -60,6 +63,7 @@ public class SendingActivity extends ActionBarActivity {
         if (client == null) {
             try {
                 client = new Client("tcp://iot.eclipse.org:1883", "ONPU.DIST.Sender", true);
+                client.setCallback(new Callback());
             } catch (MqttException e) {
                 Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
             }
@@ -83,6 +87,7 @@ public class SendingActivity extends ActionBarActivity {
                 try {
                     byte[] payload = TypesConverter.toByta(dataArray);
                     client.publish("ONPU/DIST/Lights", Client.BEST_QOS, payload);
+                    Toast.makeText(SendingActivity.this, "Sent.", Toast.LENGTH_SHORT).show();
                     // TODO Change if needed
                 } catch (MqttException e) {
                     Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
@@ -104,5 +109,20 @@ public class SendingActivity extends ActionBarActivity {
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         dataArray = savedInstanceState.getBooleanArray(dataArrayKeyString);
+    }
+
+    private class Callback implements MqttCallback {
+        @Override
+        public void connectionLost(Throwable throwable) {
+            Toast.makeText(SendingActivity.this, "Lost connection.", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+        }
+
+        @Override
+        public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+        }
     }
 }
