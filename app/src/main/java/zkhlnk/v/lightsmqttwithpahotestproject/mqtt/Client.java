@@ -3,7 +3,6 @@ package zkhlnk.v.lightsmqttwithpahotestproject.mqtt;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -11,7 +10,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
-public class Client implements MqttCallback, Parcelable {
+public class Client implements Parcelable {
 
     public static final int BEST_QOS = 2;
 
@@ -30,20 +29,14 @@ public class Client implements MqttCallback, Parcelable {
     private MqttClient client;
     private MqttConnectOptions conOpt;
 
-    public Client(String brokerUrl, String clientId, boolean cleanSession) {
+    public Client(String brokerUrl, String clientId, boolean cleanSession) throws MqttException {
         String tmpDir = System.getProperty("java.io.tmpdir");
         MqttDefaultFilePersistence dataStore = new MqttDefaultFilePersistence(tmpDir);
 
-        try {
-            conOpt = new MqttConnectOptions();
-            conOpt.setCleanSession(cleanSession);
+        conOpt = new MqttConnectOptions();
+        conOpt.setCleanSession(cleanSession);
 
-            client = new MqttClient(brokerUrl, clientId, dataStore);
-
-            client.setCallback(this);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
+        client = new MqttClient(brokerUrl, clientId, dataStore);
     }
 
     private Client(Parcel source) {
@@ -68,16 +61,12 @@ public class Client implements MqttCallback, Parcelable {
         client.subscribe(topicName, qos);
     }
 
-    @Override
-    public void connectionLost(Throwable cause) {
+    public void unsubscribe() throws MqttException {
+        client.disconnect();
     }
 
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken token) {
-    }
-
-    @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
+    public void setCallback(MqttCallback callback) {
+        client.setCallback(callback);
     }
 
     @Override
