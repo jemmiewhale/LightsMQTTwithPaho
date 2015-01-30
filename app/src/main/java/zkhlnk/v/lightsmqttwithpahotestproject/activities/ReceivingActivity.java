@@ -69,7 +69,9 @@ public class ReceivingActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 try {
-                    client.unsubscribe();
+                    if (client.isConnected()) {
+                        client.unsubscribe();
+                    }
                 } catch (MqttException e) {
                     Toast.makeText(ReceivingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                 }

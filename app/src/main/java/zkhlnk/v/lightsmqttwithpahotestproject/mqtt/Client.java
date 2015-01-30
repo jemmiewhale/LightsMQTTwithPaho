@@ -65,6 +65,10 @@ public class Client implements Parcelable {
         client.disconnect();
     }
 
+    public boolean isConnected() {
+        return client.isConnected();
+    }
+
     public void setCallback(MqttCallback callback) {
         client.setCallback(callback);
     }
