@@ -73,5 +73,15 @@ public class ImageAdapter extends BaseAdapter {
     public void setResource(int position, int resource) {
         mThumbIds[position] = resource;
     }
+
+    public void setmThumbIds(boolean[] on, int recourseOn, int recourseOff) {
+        for (int i = 0; i < mThumbIds.length; i++) {
+            if (on[i]) {
+                setResource(i, recourseOn);
+            } else {
+                setResource(i, recourseOff);
+            }
+        }
+    }
 }
 

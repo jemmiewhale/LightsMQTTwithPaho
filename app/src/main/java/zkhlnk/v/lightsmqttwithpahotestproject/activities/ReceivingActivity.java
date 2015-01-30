@@ -27,6 +27,9 @@ public class ReceivingActivity extends ActionBarActivity {
 
     private Client client;
 
+    GridView gridview;
+    ImageAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +39,8 @@ public class ReceivingActivity extends ActionBarActivity {
             dataArray = savedInstanceState.getBooleanArray(dataArrayKeyString);
         }
 
-        final GridView gridview = (GridView) findViewById(R.id.gridview);
-        final ImageAdapter adapter = new ImageAdapter(this, NUMBER_OF_LIGHTBULB, R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
+        gridview = (GridView) findViewById(R.id.gridview);
+        adapter = new ImageAdapter(this, NUMBER_OF_LIGHTBULB, R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
         gridview.setAdapter(adapter);
 
         if (client == null) {
@@ -90,13 +93,15 @@ public class ReceivingActivity extends ActionBarActivity {
     private class Callback implements MqttCallback {
         @Override
         public void connectionLost(Throwable throwable) {
-            Toast.makeText(ReceivingActivity.this, "Lost connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(ReceivingActivity.this, "Lost connection.", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
             byte[] payload = mqttMessage.getPayload();
             dataArray = TypesConverter.toBooleanA(payload);
+            adapter.setmThumbIds(dataArray, R.drawable.lightbulb_on, R.drawable.lightbulb_off);
+            adapter.notifyDataSetChanged();
         }
 
         @Override
