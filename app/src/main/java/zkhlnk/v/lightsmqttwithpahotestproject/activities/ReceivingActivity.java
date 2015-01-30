@@ -52,6 +52,8 @@ public class ReceivingActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                // TODO: Here you can add your code, "чтобы не плодить тонну объектов."
             default:
                 return super.onOptionsItemSelected(item);
         }
