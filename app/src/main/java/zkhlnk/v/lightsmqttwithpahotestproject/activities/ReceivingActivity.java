@@ -46,6 +46,7 @@ public class ReceivingActivity extends ActionBarActivity {
         if (client == null) {
             try {
                 client = new Client("tcp://iot.eclipse.org:1883", "ONPU.DIST.Receiver", true);
+                client.setCallback(new Callback());
             } catch (MqttException e) {
                 Toast.makeText(ReceivingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
             }
