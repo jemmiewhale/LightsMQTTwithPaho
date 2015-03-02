@@ -1,6 +1,5 @@
 package zkhlnk.v.lightsmqttwithpahotestproject.mqtt;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -15,7 +14,6 @@ public class Client {
 
     private MqttAsyncClient client;
     private MqttConnectOptions conOpt;
-
     private IMqttToken conToken;
 
     public Client(String brokerUrl, String clientId, boolean cleanSession) throws MqttException {
@@ -29,31 +27,22 @@ public class Client {
     }
 
     public void publish(String topicName, int qos, byte[] payload) throws MqttException {
-        if(conToken == null) {
-            conToken = client.connect(conOpt);
-            conToken.waitForCompletion();
-        }
+        connect();
 
         MqttMessage message = new MqttMessage(payload);
         message.setQos(qos);
 
-        IMqttDeliveryToken pubToken = client.publish(topicName, message);
-        //pubToken.waitForCompletion();
+        client.publish(topicName, message);
     }
 
     public void subscribe(String topicName, int qos) throws MqttException {
-        if(conToken == null) {
-            conToken = client.connect(conOpt);
-            conToken.waitForCompletion();
-        }
+        connect();
 
-        IMqttToken subToken = client.subscribe(topicName, qos);
-        //subToken.waitForCompletion();
+        client.subscribe(topicName, qos);
     }
 
     public void unsubscribe() throws MqttException {
-        IMqttToken discToken = client.disconnect();
-        //discToken.waitForCompletion();
+        client.disconnect();
     }
 
     public boolean isConnected() {
@@ -62,5 +51,12 @@ public class Client {
 
     public void setCallback(MqttCallback callback) {
         client.setCallback(callback);
+    }
+
+    private void connect() throws MqttException {
+        if (conToken == null) {
+            conToken = client.connect(conOpt);
+            conToken.waitForCompletion();
+        }
     }
 }
