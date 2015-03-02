@@ -94,6 +94,14 @@ public class SendingActivity extends ActionBarActivity {
                 }
 
                 return true;
+            case android.R.id.home:
+                try {
+                    if (client.isConnected()) {
+                        client.unsubscribe();
+                    }
+                } catch (MqttException e) {
+                    Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
