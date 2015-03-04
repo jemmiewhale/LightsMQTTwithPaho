@@ -23,7 +23,7 @@ import zkhlnk.v.lightsmqttwithpahotestproject.utils.TypesConverter;
 
 public class SendingActivity extends ActionBarActivity {
 
-    private static final int NUMBER_OF_LIGHTBULB = 30;
+    private static final int NUMBER_OF_LIGHTBULB = R.integer.number_of_lightbulb;
 
     private boolean[] dataArray = new boolean[NUMBER_OF_LIGHTBULB];
     private String dataArrayKeyString = "DataArray";
