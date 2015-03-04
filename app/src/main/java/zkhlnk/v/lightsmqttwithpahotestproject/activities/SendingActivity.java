@@ -107,6 +107,7 @@ public class SendingActivity extends ActionBarActivity {
                 } catch (MqttException e) {
                     Toast.makeText(SendingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
                 }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
