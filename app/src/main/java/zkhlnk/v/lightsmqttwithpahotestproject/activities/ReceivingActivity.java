@@ -1,5 +1,6 @@
 package zkhlnk.v.lightsmqttwithpahotestproject.activities;
 
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,9 +21,7 @@ import zkhlnk.v.lightsmqttwithpahotestproject.utils.TypesConverter;
 
 public class ReceivingActivity extends ActionBarActivity {
 
-    private static final int NUMBER_OF_LIGHTBULB = R.integer.number_of_lightbulb;
-
-    private boolean[] dataArray = new boolean[NUMBER_OF_LIGHTBULB];
+    private boolean[] dataArray;
     private String dataArrayKeyString = "DataArray";
 
     private Client client;
@@ -35,12 +34,18 @@ public class ReceivingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sending);
 
+        Resources res = getResources();
+
         if (savedInstanceState != null) {
             dataArray = savedInstanceState.getBooleanArray(dataArrayKeyString);
         }
 
+        if (dataArray == null) {
+            dataArray = new boolean[res.getInteger(R.integer.number_of_lightbulb)];
+        }
+
         gridview = (GridView) findViewById(R.id.gridview);
-        adapter = new ImageAdapter(this, NUMBER_OF_LIGHTBULB, R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
+        adapter = new ImageAdapter(this, res.getInteger(R.integer.number_of_lightbulb), R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
         gridview.setAdapter(adapter);
 
         if (client == null) {

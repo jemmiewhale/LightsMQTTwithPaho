@@ -36,8 +36,8 @@
                 android:value="zkhlnk.v.lightsmqttwithpahotestproject.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".AutomaticSendingActivity"
-            android:label="@string/title_activity_automatic_sending"
+            android:name=".activities.AutomaticSendingActivity"
+            android:label="@string/space"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

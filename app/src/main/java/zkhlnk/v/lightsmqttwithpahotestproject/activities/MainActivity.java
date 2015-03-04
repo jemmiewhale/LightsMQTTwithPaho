@@ -38,4 +38,9 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, ReceivingActivity.class);
         startActivity(intent);
     }
+
+    public void autoModeButtonOnClick(View view) {
+        Intent intent = new Intent(this, AutomaticSendingActivity.class);
+        startActivity(intent);
+    }
 }
