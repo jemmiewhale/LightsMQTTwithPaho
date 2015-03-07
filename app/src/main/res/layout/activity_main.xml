@@ -38,7 +38,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Automatic Mode"
+            android:text="@string/automatic_sending"
             android:id="@+id/autoModeButton"
             android:layout_gravity="center_horizontal"
             android:background="#b5fa88"

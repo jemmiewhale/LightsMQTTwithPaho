@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -26,7 +25,6 @@ public class ReceivingActivity extends ActionBarActivity {
 
     private Client client;
 
-    private GridView gridview;
     private ImageAdapter adapter;
 
     @Override
@@ -44,7 +42,7 @@ public class ReceivingActivity extends ActionBarActivity {
             dataArray = new boolean[res.getInteger(R.integer.number_of_lightbulb)];
         }
 
-        gridview = (GridView) findViewById(R.id.gridview);
+        GridView gridview = (GridView) findViewById(R.id.gridview);
         adapter = new ImageAdapter(this, res.getInteger(R.integer.number_of_lightbulb), R.drawable.lightbulb_on, R.drawable.lightbulb_off, dataArray);
         gridview.setAdapter(adapter);
 

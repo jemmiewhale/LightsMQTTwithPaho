@@ -9,7 +9,8 @@
     <string name="space"> </string>
     <string name="title_activity_receiving">ReceivingActivity</string>
     <string name="title_activity_automatic_sending">AutomaticSendingActivity</string>
-
+    <string name="send">Send.</string>
+    <string name="automatic_sending">Automatic sending</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>
